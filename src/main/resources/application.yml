@@ -1,0 +1,16 @@
+server:
+  port: 9000
+
+spring:
+  application:
+    name: demo
+
+  datasource:
+    platform: mysql
+    url: jdbc:mysql://springstudy.cgllngfx5zdm.ap-northeast-2.rds.amazonaws.com :3306/My_Instagram
+    username:  admin
+    password:  dla23689!!
+    driver-class-name: com.mysql.cj.jdbc.Driver # mysql
+    # driver-class-name: com.mysql.jdbc.Driver # mysql
+  jpa:
+    database: mysql
