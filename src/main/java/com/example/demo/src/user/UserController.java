@@ -73,16 +73,27 @@ public class UserController {
 
     @ResponseBody
     @PatchMapping("/{userIdx}") // (PATCH) 127.0.0.1:9000/users/:userIdx
-    public BaseResponse<String> modifyUserName(@PathVariable("userIdx") int userIdx, @RequestBody User user){
+    public BaseResponse<String> modifyUserName(@PathVariable("userIdx") int userIdx, @RequestBody User user) {
         try {
 
-            PatchUserReq patchUserReq = new PatchUserReq(userIdx,user.getNickName());
+            PatchUserReq patchUserReq = new PatchUserReq(userIdx, user.getNickName());
             userService.modifyUserName(patchUserReq);
 
-            String result = "";
-            return new BaseResponse<>(result);
+            return new BaseResponse<>("닉네임 변경 성공");
         } catch (BaseException exception) {
             return new BaseResponse<>((exception.getStatus()));
+        }
+    }
+
+    @ResponseBody
+    @PatchMapping("/{userIdx}/status")
+    public BaseResponse<String> deleteUser(@PathVariable("userIdx") int userIdx) {
+        try {
+            DeleteUserReq deleteUserReq = new DeleteUserReq(userIdx);
+            userService.deleteUser(deleteUserReq);
+            return new BaseResponse<>("데이서 삭제(status=INACTIVE) 성공");
+        } catch (BaseException e) {
+            return new BaseResponse<>(e.getStatus());
         }
     }
 }

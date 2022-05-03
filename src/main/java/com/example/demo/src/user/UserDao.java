@@ -1,5 +1,6 @@
 package com.example.demo.src.user;
 
+import com.example.demo.src.user.model.DeleteUserReq;
 import com.example.demo.src.user.model.GetUserRes;
 import com.example.demo.src.user.model.PatchUserReq;
 import com.example.demo.src.user.model.PostUserReq;
@@ -62,6 +63,13 @@ public class UserDao {
         Object[] modifyUserNameParams = new Object[]{patchUserReq.getNickName(), patchUserReq.getUserIdx()};
 
         return this.jdbcTemplate.update(modifyUserNameQuery,modifyUserNameParams);
+    }
+
+    public int deleteUser(DeleteUserReq deleteUserReq) {
+        String deleteUserQuery = "update User set status = 'INACTIVE' where userIdx =? ";
+        int userIdx = deleteUserReq.getUserIdx();
+
+        return this.jdbcTemplate.update(deleteUserQuery,userIdx);
     }
 
 

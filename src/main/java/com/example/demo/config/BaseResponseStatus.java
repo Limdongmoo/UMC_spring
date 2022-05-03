@@ -46,7 +46,7 @@ public enum BaseResponseStatus {
     NOT_EXIST_IN_DATABASE(false, 4001, "검색결과가 존재하지 않습니다."),
 
     MODIFY_FAIL_USERNAME(false,4002, "닉네임변경에 실패했습니다."),
-
+    DELETE_FAIL_USERNAME(false, 4003, "데이터삭제에 실패했습니다."),
     PASSWORD_ENCRYPTION_ERROR(false, 4011, "비밀번호 암호화에 실패하였습니다."),
     PASSWORD_DECRYPTION_ERROR(false, 4012, "비밀번호 복호화에 실패하였습니다.");
 
