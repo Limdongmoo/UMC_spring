@@ -25,32 +25,15 @@ public class UserController {
     }
 
     @ResponseBody
-    @GetMapping("")
-    public BaseResponse<GetUserRes> getUsers(@RequestParam String email) {
-        try {
-            if (email.length() == 0) {
-                return new BaseResponse<>(BaseResponseStatus.POST_USERS_EMPTY_EMAIL);
-            }
-
-            if (!isRegexEmail(email)) {
-                return new BaseResponse<>(BaseResponseStatus.POST_USERS_INVALID_EMAIL);
-            }
-            GetUserRes getUserRes = userProvider.getUsersByEmail(email);
-            return new BaseResponse<>(getUserRes);
-        } catch (BaseException exception) {
-            return new BaseResponse<>(exception.getStatus());
-        }
-    }
-
-    @ResponseBody
     @GetMapping("/{userIdx}")
-    public BaseResponse<GetUserRes> getUserByIdx(@PathVariable("userIdx") int userIdx) {
-        try {
-            GetUserRes getUserRes = userProvider.getUsersByIdx(userIdx);
-            return new BaseResponse<>(getUserRes);
-        } catch (BaseException exception) {
-            return new BaseResponse<>(exception.getStatus());
+    public BaseResponse<GetUserFeedRes> getUserFeed(@PathVariable("userIdx") int userIdx) {
+        try{
+            GetUserFeedRes getUserFeedRes= userProvider.retrieveUserFeed(userIdx);
+            return new BaseResponse<>(getUserFeedRes);
+        } catch(BaseException e){
+            return new BaseResponse<>(e.getStatus());
         }
+
     }
 
     @ResponseBody
@@ -96,4 +79,6 @@ public class UserController {
             return new BaseResponse<>(e.getStatus());
         }
     }
+
+
 }

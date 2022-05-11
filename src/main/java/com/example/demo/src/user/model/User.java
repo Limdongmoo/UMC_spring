@@ -4,6 +4,7 @@ import lombok.*;
 
 @Getter
 @Setter
+
 public class User {
     private int userIdx;
     private String name;

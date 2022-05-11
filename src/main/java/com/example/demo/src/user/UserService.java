@@ -29,7 +29,6 @@ public class UserService {
     public PostUserRes createUser(PostUserReq postUserReq) throws BaseException {
 
         if(userProvider.checkEmail(postUserReq.getEmail())==1){
-            System.out.println("==>postUserReq1 = " + postUserReq.getEmail());
             throw new BaseException(BaseResponseStatus.POST_USERS_EXISTS_EMAIL);
         }
         try{
