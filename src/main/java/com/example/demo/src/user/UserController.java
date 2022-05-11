@@ -25,8 +25,8 @@ public class UserController {
     }
 
     @ResponseBody
-    @GetMapping("/{userIdx}")
-    public BaseResponse<GetUserFeedRes> getUserFeed(@PathVariable("userIdx") int userIdx) {
+    @GetMapping("")
+    public BaseResponse<GetUserFeedRes> getUserFeed(@RequestParam("userIdx") int userIdx) {
         try{
             GetUserFeedRes getUserFeedRes= userProvider.retrieveUserFeed(userIdx);
             return new BaseResponse<>(getUserFeedRes);
