@@ -7,6 +7,7 @@ import lombok.Setter;
 @Setter
 
 public class GetUserInfoRes {
+    private int userIdx;
     private String name;
     private String nickName;
     private String profileImgUrl;
@@ -16,7 +17,8 @@ public class GetUserInfoRes {
     private int followerCount;
     private int followeeCount;
 
-    public GetUserInfoRes(String name, String nickName, String profileImgUrl, String introduce, String website, int postCount, int followerCount, int followeeCount) {
+    public GetUserInfoRes(int userIdx, String name, String nickName, String profileImgUrl, String introduce, String website, int postCount, int followerCount, int followeeCount) {
+        this.userIdx = userIdx;
         this.name = name;
         this.nickName = nickName;
         this.profileImgUrl = profileImgUrl;
@@ -26,4 +28,5 @@ public class GetUserInfoRes {
         this.followerCount = followerCount;
         this.followeeCount = followeeCount;
     }
+
 }

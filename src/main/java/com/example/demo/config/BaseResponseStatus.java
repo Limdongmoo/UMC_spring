@@ -24,6 +24,14 @@ public enum BaseResponseStatus {
     POST_USERS_INVALID_EMAIL(false, 2016, "이메일 형식을 확인해주세요."),
     POST_USERS_EXISTS_EMAIL(false,2017,"중복된 이메일입니다."),
 
+    // [POST} / posts
+    TOO_LONG_CONTENT(false, 2030, "게시물의 길이가 450을 초과합니다."),
+    MUST_INSERT_IMAGE(false, 2031, "게시물 이미지를 추가해주십시오"),
+    TOO_MANY_IMAGE(false, 2032, "게시물의 이미지가 너무 많습니다."),
+    INSERT_IMAGE_ERROR(false, 2033, "게시물 이미지 삽입에 실패하였습니다."),
+    INSERT_POST_ERROR(false, 2034, "게시물 생성에 실패하였습니다."),
+    NOT_MODIFIED(false, 2035, "게시물이 수정되지 않았습니다."),
+
 
     /**
      * 3000 : Response 오류

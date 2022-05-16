@@ -1,11 +1,12 @@
 package com.example.demo.src.post;
 import com.example.demo.src.post.model.GetPostImg;
 import com.example.demo.src.post.model.GetPostRes;
+import com.example.demo.src.post.model.PatchPostsReq;
+import com.example.demo.src.post.model.PostImgUrls;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
-import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -68,9 +69,44 @@ public class PostDao {
                 ), selectPostListParam);
     }
 
+    public int createPost(int userIdx,String content){
+        Object[] createPostParam = {userIdx, content};
+        String createPostQuery = "INSERT INTO Post(userIdx, content)\n" +
+                "VALUES(?,?)";
+
+        jdbcTemplate.update(createPostQuery, createPostParam);
+        return jdbcTemplate.queryForObject("select last_insert_id()" , int.class);
+
+    }
+    public int insertImgs(int postIdx, PostImgUrls imgUrl) {
+        Object[] insertImgParam = {postIdx, imgUrl.getImgUrl()};
+        String insertImgQuery = "INSERT INTO PostingUrl(postIdx,ImgUrl) VALUES(?,?)";
+        return jdbcTemplate.update(insertImgQuery, insertImgParam);
+    }
+
+    public int updatePostContent(int postIdx, PatchPostsReq patchPostsReq) {
+        Object[] updatePostContentParams = {patchPostsReq.getContent(),postIdx};
+        String updatePostContentQuery = "update Post set content = ? where postIdx = ? ";
+        return jdbcTemplate.update(updatePostContentQuery, updatePostContentParams);
+    }
+
+    public int updatePostStatus(int postIdx){
+        int updatePostStatusParam = postIdx;
+        String updatePostStatusQuery = "update Post set status ='INACTIVE' where postIdx =?";
+        return jdbcTemplate.update(updatePostStatusQuery, updatePostStatusParam);
+    }
+
     public int checkUserExist(int userIdx){
         String checkUserExistQuery = "select exists(select userIdx from User where userIdx=?)";
         int checkUserExistParam = userIdx;
         return jdbcTemplate.queryForObject(checkUserExistQuery, int.class,checkUserExistParam);
+    }
+
+    public String checkPostContentModified(int postIdx) {
+        String checkPostContentModifiedQuery = "SELECT content\n" +
+                "FROM Post as p\n" +
+                "WHERE p.postIdx = ?";
+        int checkPostContentModifiedParam = postIdx;
+        return jdbcTemplate.queryForObject(checkPostContentModifiedQuery, String.class, checkPostContentModifiedParam);
     }
 }

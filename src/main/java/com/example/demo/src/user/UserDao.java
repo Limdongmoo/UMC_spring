@@ -8,21 +8,15 @@ import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.util.List;
-import java.util.Locale;
+
 
 @Repository
 public class UserDao {
 
-    private JdbcTemplate jdbcTemplate;
+    private final JdbcTemplate jdbcTemplate;
 
     public UserDao(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
-    }
-
-    public List<GetUserRes> getUsers() {
-        String getUsersQuery = "select userIdx,name,nickName,Email from User";
-        return this.jdbcTemplate.query(getUsersQuery,
-                UserRowMapper());
     }
 
 
@@ -35,7 +29,7 @@ public class UserDao {
 
     public GetUserInfoRes selectUserInfoByUserIdx(int userIdx){
 
-        String getUserInfoResQuery = "SELECT name,nickName,Introduce,website,\n" +
+        String getUserInfoResQuery = "SELECT User.userIdx,name,nickName,Introduce,website,\n" +
                 "       IF(profileImgUrl IS NULL,'BASIC IMG',profileImgUrl) as profileImgUrl,\n" +
                 "       IF(postCount IS NULL,0,postCount) as postCount,\n" +
                 "       IF(followerCount IS NULL,0,followerCount) as followerCount,\n" +
@@ -61,6 +55,7 @@ public class UserDao {
 
         return jdbcTemplate.queryForObject(getUserInfoResQuery,
                 (rs, rowNum) -> new GetUserInfoRes(
+                        rs.getInt("userIdx"),
                         rs.getString("name"),
                         rs.getString("nickName"),
                         rs.getString("profileImgUrl"),
@@ -69,7 +64,7 @@ public class UserDao {
                         rs.getInt("postCount"),
                         rs.getInt("followerCount"),
                         rs.getInt("followeeCount")
-                ),getUserInfoResParam);
+                ), getUserInfoResParam);
     }
 
     public List<GetUserPostsInfoRes> selectUserPostInfoByUserIdx(int userIdx) {
